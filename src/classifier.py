@@ -1,8 +1,8 @@
 from werkzeug.datastructures import FileStorage
+from src.content_classifier import classify_by_content
 
 def classify_file(file: FileStorage):
     filename = file.filename.lower()
-    # file_bytes = file.read()
 
     if "drivers_license" in filename:
         return "drivers_licence"
@@ -13,5 +13,5 @@ def classify_file(file: FileStorage):
     if "invoice" in filename:
         return "invoice"
 
-    return "unknown file"
-
+    # fallback to content-based classification
+    return classify_by_content(file)
